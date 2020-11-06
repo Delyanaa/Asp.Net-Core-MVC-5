@@ -14,7 +14,7 @@ namespace SportsStoreTests
         [Fact]
         public void Can_Paginate()
         {
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            var mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns((new Product[] {
              new Product {ProductID = 1, Name = "P1"},
              new Product {ProductID = 2, Name = "P2"},
@@ -24,7 +24,7 @@ namespace SportsStoreTests
              }).AsQueryable<Product>());
 
             ProductController controller = new ProductController(mock.Object);
-            controller.PageSize = 3;
+            controller.ItemsPerPage = 3;
             // Act
             IEnumerable<Product> result =
             controller.List(2).ViewData.Model as IEnumerable<Product>;
