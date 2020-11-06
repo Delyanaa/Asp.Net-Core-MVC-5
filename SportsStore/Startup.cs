@@ -53,8 +53,12 @@ namespace SportsStore
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                   name: "product",
+                   pattern: "{controller=product}/{action=list}/productPage{productPage}");
+
+                endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Product}/{action=List}/{id?}");
+                    pattern: "{controller=product}/{action=list}/{id?}");
             });
 
             SeedData.EnsurePopulated(app); //populates the database
