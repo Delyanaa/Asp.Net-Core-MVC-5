@@ -21,7 +21,7 @@ namespace SportsStore
         //application through the dependency injection feature
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options => 
+            services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(
                     Configuration["Data:SportStoreProducts:ConnectionString"]
                     )
@@ -52,10 +52,36 @@ namespace SportsStore
 
             app.UseEndpoints(endpoints =>
             {
+                // => product/list/Soccer/Page2
                 endpoints.MapControllerRoute(
-                   name: "product",
-                   pattern: "{controller=product}/{action=list}/productPage{productPage}");
+                        name: "product/list/category/page",
+                        pattern: "{category}/Page{productPage}",
+                        defaults: new { controller = "Product", action = "List" }
+                );
 
+                // => product/list/Page2
+                endpoints.MapControllerRoute(
+                        name: "product/list/page",
+                        pattern: "Page{productPage:int}",
+                        defaults: new { controller = "Product", action = "List", productPage = 1 }
+                );
+
+                // => product/list/Soccer
+                endpoints.MapControllerRoute(
+                        name: "product/list/category",
+                        pattern: "{category}",
+                        defaults: new { controller = "Product", action = "List", productPage = 1 }
+                );
+
+
+                // => product/list/
+                endpoints.MapControllerRoute(
+                       name: "product",
+                       pattern: "",
+                       defaults: "{controller=product}/{action=list}/productPage{productPage}"
+                   );
+
+                // => 
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=product}/{action=list}/{id?}");
