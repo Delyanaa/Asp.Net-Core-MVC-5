@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SportsStore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,21 @@ namespace SportsStore.Components
 {
     public class NavigationMenuViewComponent : ViewComponent
     {
-        public string Invoke()  //(InvokeAsync) this is the name of the method by convention 
+        public IProductRepository repository;
+
+        public NavigationMenuViewComponent(IProductRepository productRepository)
         {
-            return "This will be the category list";
+            repository = productRepository;
+        }
+
+        public IViewComponentResult Invoke()  //(InvokeAsync) this is the name of the method by convention 
+        {
+            return View(
+                repository.Products
+                .Select(p => p.Category)
+                .Distinct()
+                .OrderBy(x => x)
+                );
         }
     }
 }
