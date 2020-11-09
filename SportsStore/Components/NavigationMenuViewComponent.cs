@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models;
+using SportsStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,16 @@ namespace SportsStore.Components
 
         public IViewComponentResult Invoke()  //(InvokeAsync) this is the name of the method by convention 
         {
-            return View(
-                repository.Products
+
+            var navigationMenuListViewModel = new NavigationMenuListViewModel(
+                (repository.Products
                 .Select(p => p.Category)
                 .Distinct()
-                .OrderBy(x => x)
+                .OrderBy(x => x)), 
+                RouteData?.Values["category"]
                 );
+
+            return View(navigationMenuListViewModel);
         }
     }
 }
