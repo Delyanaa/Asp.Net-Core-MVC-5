@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Moq;
 using SportsStore.Components;
 using SportsStore.Models;
+using SportsStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,13 +30,11 @@ namespace SportsStoreTests
             );
 
             NavigationMenuViewComponent navigationMenuViewComponent = 
-                new NavigationMenuViewComponent(mock.Object); 
+                new NavigationMenuViewComponent(mock.Object);
 
             //Act
-            var result = (
-                (IEnumerable<string>) (navigationMenuViewComponent.Invoke()
-            as ViewViewComponentResult).ViewData.Model
-            ).ToArray();
+            var result = ((navigationMenuViewComponent.Invoke()
+            as ViewViewComponentResult).ViewData.Model as NavigationMenuListViewModel).Categories.ToArray();
 
             //Assert 
             Assert.True(Enumerable.SequenceEqual(result, new string[] {"Cat", "Cow", "Dog"}));

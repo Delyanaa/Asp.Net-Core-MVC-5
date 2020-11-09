@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.AspNetCore.Mvc;
+using Moq;
 using SportsStore.Controllers;
 using SportsStore.Models;
 using SportsStore.Models.ViewModels;
@@ -91,6 +92,43 @@ namespace SportsStoreTests
             Assert.Equal(2, products.Length);
             Assert.True(products[0].Name == "P1" && products[0].Category == "cat1");
             Assert.True(products[1].Name == "P4" && products[0].Category == "cat1");
+        }
+
+        [Fact]
+        public void Generate_Category_Specific_Product_Count()
+        {
+            //Arrange 
+            var mock = new Mock<IProductRepository>();
+            mock.Setup(p => p.Products).Returns((new Product[] {
+                    new Product{ProductID = 1, Name = "P1", Category = "cat"},
+                    new Product{ProductID = 2, Name = "P2", Category = "dog"},
+                    new Product{ProductID = 3, Name = "P3", Category = "dog"},
+                    new Product{ProductID = 4, Name = "P4", Category = "cat"},
+                    new Product{ProductID = 5, Name = "P5", Category = "rabbit"},
+                    new Product{ProductID = 6, Name = "P6", Category = "cat"},
+                    new Product{ProductID = 7, Name = "P7", Category = "cat"},
+                    new Product{ProductID = 8, Name = "P8", Category = "cat"},
+                    new Product{ProductID = 9, Name = "P9", Category = "cat"}
+
+                }).AsQueryable<Product>()
+            );
+
+            var controller = new ProductController(mock.Object);
+
+            //Act
+            Func<ViewResult, ProductsListViewModel> GetModel = result =>
+                                                    result?.ViewData?.Model as ProductsListViewModel;
+            // Action
+            int? res1 = GetModel(controller.List("cat"))?.PagingInfo.TotalItems;
+            int? res2 = GetModel(controller.List("dog"))?.PagingInfo.TotalItems;
+            int? res3 = GetModel(controller.List("rabbit"))?.PagingInfo.TotalItems;
+            int? resAll = GetModel(controller.List(null))?.PagingInfo.TotalItems;
+
+            // Assert
+            Assert.Equal(6, res1);
+            Assert.Equal(2, res2);
+            Assert.Equal(1, res3);
+            Assert.Equal(9, resAll);
         }
     }
 }
