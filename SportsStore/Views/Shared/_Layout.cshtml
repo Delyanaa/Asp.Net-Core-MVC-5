@@ -7,13 +7,19 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-reboot.min.css" />
+    <script src="https://kit.fontawesome.com/c7caa97631.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse bg-inverse" role="navigation">
-        <a class="navbar-brand" 
-           asp-action="List"
-           asp-controller="Product"
-           asp-route-category="">SPORTS STORE</a>
+        <div class="row">
+            <a class="navbar-brand"
+               asp-action="List"
+               asp-controller="Product"
+               asp-route-category="">SPORTS STORE</a>
+            <div class="col-4 text-right">
+                @await Component.InvokeAsync("CartSummary")
+            </div>
+        </div>
     </div>
     <div class="row m-1 p-1">
         <div id="categories" class="col-3">
