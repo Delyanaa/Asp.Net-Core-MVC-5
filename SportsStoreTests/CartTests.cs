@@ -104,7 +104,5 @@ namespace SportsStoreTests
             //Assert
             Assert.True(cart.lineCollection.Count() == 0);
         }
-
-
     }
 }
