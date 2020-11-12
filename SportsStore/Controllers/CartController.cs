@@ -1,17 +1,55 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportsStore.Infrastructure;
 using SportsStore.Models;
+using SportsStore.Models.ViewModels;
 using System.Linq;
 
 namespace SportsStore.Controllers
 {
-    public class CartContoller : Controller
+    public class CartController : Controller
     {
         public IProductRepository repository { get; set; }
 
-        public CartContoller(IProductRepository productRepository)
+        public CartController(IProductRepository productRepository)
         {
             repository = productRepository;
+        }
+
+
+        public RedirectToActionResult AddToCart(int productId, string returnUrl)
+        {
+            var product = repository.Products.FirstOrDefault(p => p.ProductID == productId);
+
+            if (product != null)
+            {
+                Cart cart = GetCart();
+                cart.AddItem(product, 1);
+                SaveCart(cart);
+            }
+
+            return RedirectToAction("Index", new { returnUrl });
+        }
+
+        public RedirectToActionResult RemoveFromCart(int productId, string returnUrl)
+        {
+            var product = repository.Products.FirstOrDefault(p => p.ProductID == productId);
+
+            if (product != null)
+            {
+                Cart cart = GetCart();
+                cart.RemoveLine(product);
+                SaveCart(cart);
+            }
+            return RedirectToAction("Index", new { returnUrl });
+        }
+
+        public ActionResult Index(string returnUrl)
+        {
+
+            return View(new CartIndexViewModel(){
+                Cart = GetCart(),
+                ReturnUrl = returnUrl}
+            );
         }
 
         private Cart GetCart()
@@ -23,33 +61,6 @@ namespace SportsStore.Controllers
         private void SaveCart(Cart cart)
         {
             HttpContext.Session.SetJson("Cart", cart);
-        }
-
-        public ActionResult AddToCart(int productId, string returnUrl)
-        {
-            var product = repository.Products.FirstOrDefault(p => p.ProductID == productId);
-
-            if (product == null)
-            {
-                Cart cart = GetCart();
-                cart.AddItem(product, 1);
-                SaveCart(cart);
-            }
-
-            return RedirectToAction("Index", new { returnUrl });
-        }
-
-        public ActionResult RemoveFromCart(int productId, string returnUrl)
-        {
-            var product = repository.Products.FirstOrDefault(p => p.ProductID == productId);
-
-            if (product != null)
-            {
-                Cart cart = GetCart();
-                cart.RemoveLine(product);
-                SaveCart(cart);
-            }
-            return RedirectToAction("Index", new { returnUrl });
         }
     }
 }
