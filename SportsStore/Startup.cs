@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using SportsStore.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace SportsStore
 {
@@ -27,6 +28,9 @@ namespace SportsStore
                     )
             );
             services.AddTransient<IProductRepository, EFProductRepository>();
+            services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddControllersWithViews();
             services.AddMemoryCache();
             services.AddSession();
