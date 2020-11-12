@@ -1,39 +1,39 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SportsStore.Models
 {
-    public class Cart
+    public class Order
     {
-        public List<CartLine> lineCollection = new List<CartLine>();
+        [BindNever] // prevents the user from supplying values for these properties in an HTTP request
+        public int OrderID { get; set; }
 
-        public virtual void AddItem(Product product, int quantity)
-        {
-            CartLine line = lineCollection.Where(p => p.Product.ProductID == product.ProductID).FirstOrDefault();
+        [BindNever]
+        public ICollection<CartLine> Lines { get; set; }
 
-            if (line == null)
-                lineCollection.Add(new CartLine { Product = product, Quantity = quantity });
-            else
-                line.Quantity += quantity;
-        }
+        [Required(ErrorMessage = "Please enter a name")]
+        public string Name { get; set; }
+        
+        [Required(ErrorMessage = "Please enter the first address line")]
+        public string Address_Line1 { get; set; }
+        
+        public string Address_Line2 { get; set; }
+        
+        public string Address_Line3 { get; set; }
 
-        public virtual void RemoveLine(Product product) =>
-                lineCollection.RemoveAll(l => l.Product.ProductID == product.ProductID);
-
-        public virtual decimal ComputeTotalValue() =>
-               lineCollection.Sum(e => e.Product.Price * e.Quantity);
-
-        public virtual void Clear() => lineCollection.Clear();
-
-        ///gives access to the contents of the cart
-        public virtual IEnumerable<CartLine> Lines => lineCollection;
-    }
-    
-    public class CartLine
-    {
-        public int CartLineID { get; set; }
-        public Product Product { get; set; }
-        public int Quantity { get; set; }
+        [Required(ErrorMessage = "Please enter a city name")]
+        public string City { get; set; }
+       
+        [Required(ErrorMessage = "Please enter a state name")]
+        public string State { get; set; }
+        
+        public string Zip { get; set; }
+        
+        [Required(ErrorMessage = "Please enter a country name")]
+        public string Country { get; set; }
+        
+        public bool GiftWrap { get; set; }
     }
 }
