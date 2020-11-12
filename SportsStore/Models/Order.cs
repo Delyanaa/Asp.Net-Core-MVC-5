@@ -6,7 +6,7 @@ namespace SportsStore.Models
 {
     public class Order
     {
-        [BindNever] // prevents the user from supplying values for these properties in an HTTP request
+        [BindNever] // <= Prevents the user from supplying values for these properties in an HTTP request
         public int OrderID { get; set; }
 
         [BindNever]
