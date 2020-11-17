@@ -16,7 +16,8 @@ namespace SportsStore.Models
         }
 
         // Specify that when an Order object is read from the
-        // database, the collection associated with the Lines property
+        // database, the collection associated with the Lines property 
+        // should also be loaded along with each Product object associated with each collection object.
         public IQueryable<Order> Orders => context.Orders.Include(o => o.Lines).ThenInclude(l => l.Product);
 
         public void SaveOrder(Order order)
