@@ -4,15 +4,16 @@ using System.Linq;
 
 namespace SportsStore.Controllers
 {
+
     public class OrderController : Controller
     {
-        public IOrderRepository orderRepository;
-        public Cart cart;
+        private IOrderRepository repository;
+        private Cart cart;
 
-        public OrderController(IOrderRepository repo, Cart cartServicer)
+        public OrderController(IOrderRepository repoService, Cart cartService)
         {
-            orderRepository = repo;
-            cart = cartServicer;
+            repository = repoService;
+            cart = cartService;
         }
 
         public ViewResult Checkout() => View(new Order());
@@ -21,13 +22,13 @@ namespace SportsStore.Controllers
         public IActionResult Checkout(Order order)
         {
             if (cart.Lines.Count() == 0)
-                ModelState.AddModelError("", "Sorry, your cart is empty");
-
+            {
+                ModelState.AddModelError("", "Sorry, your cart is empty!");
+            }
             if (ModelState.IsValid)
             {
                 order.Lines = cart.Lines.ToArray();
-                orderRepository.SaveOrder(order);
-
+                repository.SaveOrder(order);
                 return RedirectToAction(nameof(Completed));
             }
             else

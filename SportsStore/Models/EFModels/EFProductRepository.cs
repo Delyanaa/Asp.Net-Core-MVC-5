@@ -8,8 +8,9 @@ namespace SportsStore.Models
     {
         private AppDbContext context;
 
-        public EFProductRepository(AppDbContext ctx) {
-            context = ctx;        
+        public EFProductRepository(AppDbContext ctx)
+        {
+            context = ctx;
         }
 
         public IQueryable<Product> Products => context.Products;

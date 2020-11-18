@@ -20,8 +20,6 @@ namespace SportsStoreTests
                 new Product() { ProductID = 6, Name = "P6", Price = 1M },
                 new Product() { ProductID = 7, Name = "P7", Price = 50M }
             };
-
-
             return list;
         }
 

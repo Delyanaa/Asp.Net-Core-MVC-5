@@ -27,14 +27,16 @@ namespace SportsStore
                     Configuration["Data:SportStoreProducts:ConnectionString"]
                     )
             );
-            services.AddTransient<IProductRepository, EFProductRepository>();
-            services.AddTransient<IOrderRepository, EFOrderRepository>();
-
-            services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddControllersWithViews();
-            services.AddMemoryCache();
+
+            services.AddTransient<IProductRepository, EFProductRepository>();
+            services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IOrderRepository, EFOrderRepository>();
+
+            services.AddMvc();
+            services.AddDistributedMemoryCache();
             services.AddSession();
         }
 

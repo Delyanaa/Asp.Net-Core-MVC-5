@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models;
 using SportsStore.Models.ViewModels;
-using System.Linq;
 
 namespace SportsStore.Controllers
 {
+
     public class CartController : Controller
     {
         private IProductRepository repository;
@@ -28,8 +29,7 @@ namespace SportsStore.Controllers
         public RedirectToActionResult AddToCart(int productId, string returnUrl)
         {
             Product product = repository.Products
-            .FirstOrDefault(p => p.ProductID == productId);
-
+                .FirstOrDefault(p => p.ProductID == productId);
             if (product != null)
             {
                 cart.AddItem(product, 1);
@@ -38,10 +38,11 @@ namespace SportsStore.Controllers
         }
 
         public RedirectToActionResult RemoveFromCart(int productId,
-        string returnUrl)
+                string returnUrl)
         {
             Product product = repository.Products
-            .FirstOrDefault(p => p.ProductID == productId);
+                .FirstOrDefault(p => p.ProductID == productId);
+
             if (product != null)
             {
                 cart.RemoveLine(product);

@@ -25,7 +25,7 @@ namespace SportsStore.Models
             // Notify EF that the objects exist and shouldn’t be stored in the database unless they are modified.
             // This ensures that Entity Framework Core won’t try to write the deserialized Product objects that are
             // associated with the Order object
-            context.AttachRange(order.Lines.Select(l => l.Product));
+            context.AttachRange(order.Lines.Select(l => l.Product).FirstOrDefault());
             if (order.OrderID == 0)
                 context.Orders.Add(order);
             

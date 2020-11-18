@@ -11,14 +11,14 @@
 </head>
 <body>
     <div class="navbar navbar-inverse bg-inverse bg-dark" role="navigation">
-            <a class="navbar-brand ml-1 pl-2"
-               asp-action="List"
-               asp-controller="Product"
-               asp-route-category="">SPORTS STORE</a>
-            <div class="ml-auto">
-                @await Component.InvokeAsync("CartSummary")
-            </div>
+        <a class="navbar-brand ml-1 pl-2"
+           asp-action="List"
+           asp-controller="Product"
+           asp-route-category="">SPORTS STORE</a>
+        <div class="ml-auto">
+            @await Component.InvokeAsync("CartSummary")
         </div>
+    </div>
     <div class="row m-1 p-1">
         <div id="categories" class="col-3 pt-5">
             @await Component.InvokeAsync("NavigationMenu")
@@ -28,5 +28,5 @@
         </div>
     </div>
 </body>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js" />
 </html>
