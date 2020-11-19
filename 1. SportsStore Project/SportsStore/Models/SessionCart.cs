@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -12,33 +13,38 @@ namespace SportsStore.Models
 
         public static Cart GetCart(IServiceProvider services)
         {
-            ISession session = services.GetRequiredService<IHttpContextAccessor>()?
+            ISession session = services
+                .GetRequiredService<IHttpContextAccessor>()?
                 .HttpContext.Session;
-            SessionCart cart = session?.GetJson<SessionCart>("Cart")
+
+            SessionCart cart = session?
+                .GetJson<SessionCart>("Cart")
                 ?? new SessionCart();
-            cart.Session = session;
+
+            cart.CurrentSession = session;
+            
             return cart;
         }
 
         [JsonIgnore]
-        public ISession Session { get; set; }
+        public ISession CurrentSession { get; set; }
 
         public override void AddItem(Product product, int quantity)
         {
             base.AddItem(product, quantity);
-            Session.SetJson("Cart", this);
+            CurrentSession.SetJson("Cart", this);
         }
 
         public override void RemoveLine(Product product)
         {
             base.RemoveLine(product);
-            Session.SetJson("Cart", this);
+            CurrentSession.SetJson("Cart", this);
         }
 
         public override void Clear()
         {
             base.Clear();
-            Session.Remove("Cart");
+            CurrentSession.Remove("Cart");
         }
     }
 }

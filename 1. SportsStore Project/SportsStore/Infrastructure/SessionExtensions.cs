@@ -9,6 +9,7 @@ namespace SportsStore.Infrastructure
 
         public static void SetJson(this ISession session, string key, object value)
         {
+            session.Clear();
             session.SetString(key, JsonConvert.SerializeObject(value));
         }
 
