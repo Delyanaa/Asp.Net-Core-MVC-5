@@ -1,0 +1,15 @@
+﻿@model SportsStore.Models.ViewModels.ProductsListViewModel
+
+    <div class="col-8 jumbotron-fluid">
+        <ul class="list-group">
+            @foreach (var p in Model.Products)
+            {
+                @Html.Partial("ProductSummary", p);
+            }
+        </ul>
+        <div page-model="@Model.PagingInfo" page-action="List" page-classes-enabled="true"
+             page-class="btn" page-class-normal="btn-secondary"
+             page-class-selected="btn-primary" page-url-category="@Model.CurrentCategory"
+             class="btn-group pull-right m-1">
+        </div>
+    </div>
