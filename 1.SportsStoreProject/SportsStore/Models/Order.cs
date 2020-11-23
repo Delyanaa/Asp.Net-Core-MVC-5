@@ -7,6 +7,7 @@ namespace SportsStore.Models
     public class Order
     {
         [BindNever]
+        [Key]
         public int OrderID { get; set; }
         
         [BindNever]

@@ -51,16 +51,6 @@ namespace SportsStore.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address_Line1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Address_Line2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Address_Line3")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -72,9 +62,22 @@ namespace SportsStore.Migrations
                     b.Property<bool>("GiftWrap")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Line1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Line2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Line3")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Shipped")
+                        .HasColumnType("bit");
 
                     b.Property<string>("State")
                         .IsRequired()

@@ -2,7 +2,7 @@
 
 namespace SportsStore.Migrations
 {
-    public partial class Orders : Migration
+    public partial class InitialCreat : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,10 +12,11 @@ namespace SportsStore.Migrations
                 {
                     OrderID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Shipped = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Address_Line1 = table.Column<string>(nullable: false),
-                    Address_Line2 = table.Column<string>(nullable: true),
-                    Address_Line3 = table.Column<string>(nullable: true),
+                    Line1 = table.Column<string>(nullable: false),
+                    Line2 = table.Column<string>(nullable: true),
+                    Line3 = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: false),
                     State = table.Column<string>(nullable: false),
                     Zip = table.Column<string>(nullable: true),
@@ -27,21 +28,21 @@ namespace SportsStore.Migrations
                     table.PrimaryKey("PK_Orders", x => x.OrderID);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    ProductID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
-                    Category = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.ProductID);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "Products",
+            //    columns: table => new
+            //    {
+            //        ProductID = table.Column<int>(nullable: false)
+            //            .Annotation("SqlServer:Identity", "1, 1"),
+            //        Name = table.Column<string>(nullable: true),
+            //        Description = table.Column<string>(nullable: true),
+            //        Price = table.Column<decimal>(nullable: false),
+            //        Category = table.Column<string>(nullable: true)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Products", x => x.ProductID);
+            //    });
 
             migrationBuilder.CreateTable(
                 name: "CartLine",
@@ -89,8 +90,8 @@ namespace SportsStore.Migrations
             migrationBuilder.DropTable(
                 name: "Orders");
 
-            migrationBuilder.DropTable(
-                name: "Products");
+            //migrationBuilder.DropTable(
+            //    name: "Products");
         }
     }
 }
