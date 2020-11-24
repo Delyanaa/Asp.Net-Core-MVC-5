@@ -1,21 +1,24 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
+using System.Text;
+using System.Text.Json;
 
 namespace SportsStore.Infrastructure
 {
     public static class SessionExtensions
     {
-        public static void SetJson(this ISession session, string key, object value)
+        public static void SetJson<T>(this ISession session, string key, T value)
         {
-            session.SetString(key, JsonConvert.SerializeObject(value));
+            var jsonObj = Encoding.ASCII.GetBytes(JsonSerializer.Serialize<T>(value));
+            session.Set(key,jsonObj);
         }
 
         public static T GetJson<T>(this ISession session, string key)
         {
             var sessionData = session.GetString(key);
+            var deserializedCart = sessionData == null
+              ? default(T) : JsonSerializer.Deserialize<T>(sessionData);
 
-            return sessionData == null
-              ? default(T) : JsonConvert.DeserializeObject<T>(sessionData);
+            return deserializedCart;
         }
     }
 }
