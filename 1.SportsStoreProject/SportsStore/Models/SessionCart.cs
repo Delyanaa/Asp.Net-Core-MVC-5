@@ -26,8 +26,7 @@ namespace SportsStore.Models
             return cart;
         }
 
-        [JsonIgnore]
-        public ISession CurrentSession { get; set; }
+        private ISession CurrentSession { get; set; }
 
         public override void AddItem(Product product, int quantity)
         {

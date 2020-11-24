@@ -3,7 +3,6 @@ using System.Linq;
 
 namespace SportsStore.Models
 {
-
     public class Cart
     {
         public List<CartLine> lineCollection = new List<CartLine>();
@@ -11,8 +10,7 @@ namespace SportsStore.Models
         public virtual void AddItem(Product product, int quantity)
         {
             CartLine line = lineCollection
-                .Where(pr => pr.Product.ProductID == product.ProductID).Select(c => c)
-                .FirstOrDefault();
+            .FirstOrDefault(p => p.Product.ProductID == product.ProductID);
 
             if (line == null)
             {

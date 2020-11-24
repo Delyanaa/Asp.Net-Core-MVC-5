@@ -31,13 +31,13 @@ namespace SportsStore
             services.AddControllersWithViews();
 
             services.AddTransient<IProductRepository, EFProductRepository>();
-            services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            services.AddScoped<Cart>(SessionCart.GetCart);
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IOrderRepository, EFOrderRepository>();
 
             services.AddMvc();
-            services.AddDistributedMemoryCache();
+            services.AddMemoryCache();
             services.AddSession();
         }
 

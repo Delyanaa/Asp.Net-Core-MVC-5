@@ -4,7 +4,7 @@
         <ul class="list-group">
             @foreach (var p in Model.Products)
             {
-                @Html.Partial("ProductSummary", p);
+                @await Html.PartialAsync("ProductSummary", p);
             }
         </ul>
         <div page-model="@Model.PagingInfo" page-action="List" page-classes-enabled="true"
