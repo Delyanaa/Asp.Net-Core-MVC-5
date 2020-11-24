@@ -17,7 +17,7 @@ namespace ConfiguringApps
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddMvc();
             services.AddSingleton<UptimeService>();
         }
 
@@ -28,7 +28,7 @@ namespace ConfiguringApps
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseMiddleware<ContentMiddleware>();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

@@ -1,17 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using ConfiguringApps.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ConfiguringApps.Controllers
 {
     public class HomeController : Controller
     {
-        private UptimeeService up
+        private UptimeService uptimeService ;
+
+        public HomeController(UptimeService service)
+        {
+            uptimeService = service;
+        }
+
         public IActionResult Index() => View(
             new Dictionary<string, string> { 
-                ["Message"] = "This is the Index action" 
+                ["Message"] = "This is the Index action",
+                ["Uptime"] = $"{uptimeService.Uptime}ms"
             });
     }
 }
