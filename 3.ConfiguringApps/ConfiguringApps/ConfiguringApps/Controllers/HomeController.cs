@@ -8,6 +8,7 @@ namespace ConfiguringApps.Controllers
 {
     public class HomeController : Controller
     {
+        private UptimeeService up
         public IActionResult Index() => View(
             new Dictionary<string, string> { 
                 ["Message"] = "This is the Index action" 
